@@ -7,38 +7,73 @@
 		<title>Fun Module PWA</title>
 		<link rel="manifest" href="./manifest.json" />
 		<link rel="icon" type="image/png" href="./icons/icon-192.png" />
+
+		<style>
+			a {
+				all: unset;
+				background-color: red;
+				padding: 1rem;
+				border-radius: 1rem;
+			}
+
+			html,
+			body {
+				width: 100vw;
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 1rem;
+			}
+
+			.buttons {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 1rem;
+			}
+
+			.notification-buttons {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.5rem;
+			}
+		</style>
 	</head>
 	<body>
-		<a href="email_page/email.html">Email</a>
-		<br />
-		<br />
-		<button onclick="testNotification()">Test Notification</button>
-		<button onclick="showNotificationWithActions()">
-			Test Notification with Actions
-		</button>
-		<br />
-		<br />
-		<button
-			onclick="showDiscordNotification('Alice', 'Hey everyone! How are you doing?', 'general', './icons/icon-192.png')"
-		>
-			Discord Notification
-		</button>
-		<button
-			onclick="showDiscordMentionNotification('Bob', 'Can you check this out?', 'general')"
-		>
-			Discord Mention
-		</button>
-		<br />
-		<br />
-		<button
-			onclick="showNotificationWithSound('Notification with Sound', 'This notification plays a custom audio file!')"
-		>
-			Test with Sound
-		</button>
-		<br />
-		<br />
-		<button onclick="checkNotificationStatus()">Check Notification Status</button>
-		<div id="status"></div>
+		<div class="buttons">
+			<a href="discord/discord.html">Discord</a>
+			<a href="email.html">Email</a>
+		</div>
+
+		<div class="notification-buttons">
+			<button onclick="testNotification()">Test Notification</button>
+			<button onclick="showNotificationWithActions()">
+				Test Notification with Actions
+			</button>
+			<br />
+			<button
+				onclick="showDiscordNotification('Alice', 'Hey everyone! How are you doing?', 'general', './icons/icon-192.png')"
+			>
+				Discord Notification
+			</button>
+			<button
+				onclick="showDiscordMentionNotification('Bob', 'Can you check this out?', 'general')"
+			>
+				Discord Mention
+			</button>
+			<br />
+			<button
+				onclick="showNotificationWithSound('Notification with Sound', 'This notification plays a custom audio file!')"
+			>
+				Test with Sound
+			</button>
+			<br />
+			<button onclick="checkNotificationStatus()">Check Notification Status</button>
+			<div id="status"></div>
+		</div>
 
 		<script src="./scripts/notification-manager.js"></script>
 		<script src="./register-sw.js"></script>
