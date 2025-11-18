@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#5865F2" />
+		<title>Fun Module PWA</title>
+		<link rel="manifest" href="./manifest.json" />
+		<link rel="icon" type="image/png" href="./icons/icon-192.png" />
+	</head>
+	<body>
+		<a href="email_page/email.html">Email</a>
+		<br />
+		<br />
+		<button onclick="testNotification()">Test Notification</button>
+		<button onclick="showNotificationWithActions()">
+			Test Notification with Actions
+		</button>
+		<br />
+		<br />
+		<button
+			onclick="showDiscordNotification('Alice', 'Hey everyone! How are you doing?', 'general', './icons/icon-192.png')"
+		>
+			Discord Notification
+		</button>
+		<button
+			onclick="showDiscordMentionNotification('Bob', 'Can you check this out?', 'general')"
+		>
+			Discord Mention
+		</button>
+		<br />
+		<br />
+		<button
+			onclick="showNotificationWithSound('Notification with Sound', 'This notification plays a custom audio file!')"
+		>
+			Test with Sound
+		</button>
+		<br />
+		<br />
+		<button onclick="checkNotificationStatus()">Check Notification Status</button>
+		<div id="status"></div>
+
+		<script src="./scripts/notification-manager.js"></script>
+		<script src="./register-sw.js"></script>
+		<script src="./scripts/notification-demo.js"></script>
+		<script>
+			function checkNotificationStatus() {
+				const statusDiv = document.getElementById("status");
+				let status = "<h3>Notification Status:</h3>";
+				status +=
+					"<p>Notification API: " +
+					("Notification" in window ? "✅ Supported" : "❌ Not Supported") +
+					"</p>";
+				status +=
+					"<p>Service Worker: " +
+					("serviceWorker" in navigator ? "✅ Supported" : "❌ Not Supported") +
+					"</p>";
+				status +=
+					"<p>Push Manager: " +
+					("PushManager" in window ? "✅ Supported" : "❌ Not Supported") +
+					"</p>";
+				status += "<p>Permission: " + Notification.permission + "</p>";
+				status +=
+					"<p>Notification Manager: " +
+					(window.notificationManager ? "✅ Loaded" : "❌ Not Loaded") +
+					"</p>";
+				status +=
+					"<p>Service Worker Ready: " +
+					(navigator.serviceWorker.controller ? "✅ Active" : "⏳ Waiting") +
+					"</p>";
+				statusDiv.innerHTML = status;
+			}
+			window.checkNotificationStatus = checkNotificationStatus;
+		</script>
+	</body>
+</html>
