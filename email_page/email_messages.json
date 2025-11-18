@@ -1,21 +1,44 @@
 [
-    {
-        "sender_name": "Lua",
-        "sender_email": "lua@lalala.com",
-        "message": "I really like to make funny messages",
-        "title": "What am I even coding rn?",
-        "seen": false
-    },{
-        "sender_name": "Lua",
-        "sender_email": "lua@lalala.com",
-        "message": "I really like to make funny messages",
-        "title": "What am I even coding rn?",
-        "seen": false
-    },{
-        "sender_name": "Lua",
-        "sender_email": "lua@lalala.com",
-        "message": "I really like to make funny messages",
-        "title": "What am I even coding rn?",
-        "seen": false
-    }
+  {
+    "sender_name": "Lua",
+    "sender_email": "lua@lalala.com",
+    "message": "I really like to make funny messages",
+    "title": "What am I even coding rn?",
+    "date" : "2025-10-23"
+  },
+  {
+    "sender_name": "WOW A USER !!",
+    "sender_email": "user@random-domain.com",
+    "message": "Electric problem",
+    "title": "Trying new technologies, surely my power supply will be fi",
+    "date" : "2025-10-23"
+  },
+  {
+    "sender_name": "King Phillipe",
+    "sender_email": "roi@IdowhatIwant.com",
+    "message": "I have all the powers in the world !!",
+    "title": "See you at worldskills !",
+    "date" : "2025-10-23"
+  },
+  {
+    "sender_name": "Pro dev",
+    "sender_email": "never@stressed.calm",
+    "message": "Testing the deployement is doubting Pierre and the architecture !",
+    "title": "No need to panic !",
+    "date" : "2025-10-23"
+  },
+  {
+    "sender_name": "Emmanuel Wilfart",
+    "sender_email": "goatest@goat.com",
+    "message": "When something seems impossible... Try doing it in sudo mode",
+    "title": "Biggest advice of your life",
+    "date" : "2025-10-23"
+  },
+  {
+    "sender_name": "Douze coup de midi",
+    "sender_email": "jean-luc@ILoveTheWine.com",
+    "message": "We're waiting on an other Émilien to take over...",
+    "title": "We miss youuuu !!",
+    "date" : "2025-10-23"
+  }
 ]

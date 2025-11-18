@@ -6,30 +6,61 @@ async function loadEmails() {
   const content = document.getElementById("emailContent");
   const base_paraph = document.getElementById("base-paraph");
 
-  emails.forEach((email, index) => {
+  let index = 0;
+
+  const notificationSound = new Audio("./assets/notification_sound.mp3");
+  notificationSound.volume = 0.2;
+  function showNextEmail() {
+    if (index >= emails.length) return; // Stop when all emails are loaded
+
+    const email = emails[index];
+    index++;
+
+    const shortTitle =
+      email.title.length > 20 ? email.title.slice(0, 20) + "…" : email.title;
+
+    const shortMessage =
+      email.message.length > 50
+        ? email.message.slice(0, 50) + "…"
+        : email.message;
+
     const item = document.createElement("div");
-    item.classList.add('bold');
-    item.classList.add("email-item");
-    item.textContent = email.title;
+    item.classList.add("bold", "email-item");
+
+    item.innerHTML = `
+      <p>${email.sender_name}</p>
+      <p>${email.date}</p>
+      <p class="wrapped-title">${shortTitle}</p>
+      <p class="wrapped-message">${shortMessage}</p>
+    `;
 
     item.addEventListener("click", () => {
       document
         .querySelectorAll(".email-item")
         .forEach((i) => i.classList.remove("active"));
       item.classList.add("active");
-      item.classList.remove('bold')
-      base_paraph.innerHTML = ''
-      content.classList.remove('hidden')
+      item.classList.remove("bold");
+      base_paraph.innerHTML = "";
+      content.classList.remove("hidden");
       content.innerHTML = `
-                <h2>${email.title}</h2>
-                <p><strong>From:</strong> ${email.sender_name} (${email.sender_email})</p>
-                <p><strong>Message:</strong></p>
-                <p>${email.message}</p>
-            `;
+        <h2>${email.title}</h2>
+        <p><strong>From:</strong> ${email.sender_name} (${email.sender_email})</p>
+        <p><strong>Message:</strong></p>
+        <p>${email.message}</p>
+      `;
     });
 
     list.appendChild(item);
-  });
+
+    notificationSound.currentTime = 0;
+    notificationSound.play();
+
+    const randomDelay = 120000 + Math.random() * 180000;
+    setTimeout(showNextEmail, randomDelay);
+  }
+
+  // Start showing emails
+  showNextEmail();
 }
 
 loadEmails();

@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: "Sofadi One", system-ui;
     height: 100vh;
 }
 
@@ -17,6 +17,8 @@ body {
     padding: 8px;
     cursor: pointer;
     border-radius: 4px;
+    background-color: rgb(222, 222, 222);
+    margin: 5px;
 }
 
 .email-item:hover {
@@ -39,65 +41,72 @@ h2 {
     margin-top: 0;
 }
 
-.bold{
+.bold {
     font-weight: bold;
 }
 
-.hidden{
+.hidden {
     opacity: 0;
 }
 
-/* HEADER */
 .app-header {
-  height: 70px;
-  background: linear-gradient(135deg, #4e73df, #224abe);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 25px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+    height: 70px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+    background-size: 1400% 1400%;
+    animation: rainbowBG 5s ease infinite;
+}
+
+@keyframes rainbowBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .app-title {
-  font-size: 1.7rem;
-  font-weight: 600;
-  margin: 0;
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
-.app-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.header-btn {
-  background: rgba(255, 255, 255, 0.15);
-  border: none;
-  padding: 8px 16px;
-  color: white;
-  font-size: 0.95rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.header-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.header-btn.primary {
-  background: white;
-  color: #224abe;
-  font-weight: bold;
-}
-
-.header-btn.primary:hover {
-  background: #eef0ff;
-}
-.content-container{
+.content-container {
     display: flex;
     height: 100%;
+}
+
+.email-item p {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wrapped-title {
+    text-decoration: underline;
+    background-color: red;
+    color: yellow;
+}
+
+.wrapped-message {
+    font-size: 0.85rem;
+    color: #6a6a75;
 }
