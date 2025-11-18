@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="theme-color" content="#5865F2" />
-		<title>Fun Module PWA</title>
-		<link rel="manifest" href="./manifest.json" />
-		<link rel="icon" type="image/png" href="./icons/icon-192.png" />
-	</head>
-	<body>
-		<script src="./register-sw.js"></script>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#5865F2" />
+    <title>Fun Module PWA</title>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" type="image/png" href="./icons/icon-192.png" />
+
+    <style>
+      a {
+        all: unset;
+        background-color: red;
+        padding: 1rem;
+        border-radius: 1rem;
+      }
+
+      html,
+      body {
+        width: 100vw;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="buttons">
+      <a href="discord/discord.html">Discord</a>
+      <a href="email.html">Email</a>
+    </div>
+    <script src="./register-sw.js"></script>
+  </body>
 </html>
