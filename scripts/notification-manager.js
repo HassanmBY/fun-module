@@ -64,8 +64,8 @@ class NotificationManager {
 		}
 
 		const defaultOptions = {
-			icon: "./icons/icon-192.png",
-			badge: "./icons/icon-192.png",
+			icon: "/icons/icon-192.png",
+			badge: "/icons/icon-192.png",
 			tag: options.tag || `notification-${Date.now()}`,
 			silent: options.sound ? true : options.silent || false, // Silent if custom sound is playing
 			...options,
