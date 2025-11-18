@@ -15,10 +15,41 @@ if ("serviceWorker" in navigator) {
 
 // PWA Install Prompt
 let deferredPrompt;
+
+// Check if app is already installed
+if (window.matchMedia("(display-mode: standalone)").matches) {
+	// App is already installed, hide install button
+	const installButton = document.getElementById("install-button");
+	if (installButton) {
+		installButton.style.display = "none";
+	}
+}
+
 window.addEventListener("beforeinstallprompt", e => {
 	e.preventDefault();
 	deferredPrompt = e;
+	// Show install button if it exists
+	const installButton = document.getElementById("install-button");
+	if (installButton) {
+		installButton.style.display = "block";
+	}
 });
+
+// Install function
+window.installPWA = async () => {
+	if (!deferredPrompt) {
+		return;
+	}
+	deferredPrompt.prompt();
+	const { outcome } = await deferredPrompt.userChoice;
+	if (outcome === "accepted") {
+		deferredPrompt = null;
+		const installButton = document.getElementById("install-button");
+		if (installButton) {
+			installButton.style.display = "none";
+		}
+	}
+};
 
 // Expose notification functions globally for easy access
 window.requestNotificationPermission = async () => {
