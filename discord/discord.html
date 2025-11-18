@@ -123,6 +123,32 @@
         color: var(--text-header);
         box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2);
         cursor: pointer;
+        background: linear-gradient(
+          270deg,
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          indigo,
+          violet
+        );
+        background-size: 1400% 1400%;
+        animation: rainbowBG 5s ease infinite;
+      }
+
+      @keyframes rainbowBG {
+        0% {
+          background-position: 0% 50%;
+        }
+
+        50% {
+          background-position: 100% 50%;
+        }
+
+        100% {
+          background-position: 0% 50%;
+        }
       }
 
       .channel-list {
@@ -212,6 +238,18 @@
         box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2);
         color: var(--text-header);
         font-weight: bold;
+        background: linear-gradient(
+          270deg,
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          indigo,
+          violet
+        );
+        background-size: 1400% 1400%;
+        animation: rainbowBG 5s ease infinite;
       }
 
       .chat-header .hashtag {
