@@ -1,7 +1,13 @@
 // Service Worker Registration
 if ("serviceWorker" in navigator) {
 	window.addEventListener("load", () => {
-		navigator.serviceWorker.register("./sw.js", { scope: "./" }).catch(error => {
+		// Determine the correct path to sw.js based on current location
+		const swPath = window.location.pathname.includes("/discord/")
+			? "../sw.js"
+			: "./sw.js";
+		const swScope = window.location.pathname.includes("/discord/") ? "../" : "./";
+
+		navigator.serviceWorker.register(swPath, { scope: swScope }).catch(error => {
 			console.error("Service Worker registration failed:", error);
 		});
 	});

@@ -15,6 +15,9 @@ const urlsToCache = [
 	"./email_page/script.js",
 	"./email_page/style.css",
 	"./email_page/email_messages.json",
+	"./discord/discord.html",
+	"./discord/discord.js",
+	"./assets/sounds/notification.mp3",
 ];
 
 // Install event - cache resources

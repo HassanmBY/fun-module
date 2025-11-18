@@ -3,12 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#5865F2" />
+    <link rel="manifest" href="../manifest.json" />
+    <link rel="icon" type="image/png" href="../icons/icon-192.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Sofadi+One&display=swap"
       rel="stylesheet"
     />
+    <script src="../scripts/notification-manager.js"></script>
+    <script src="../register-sw.js"></script>
+    <script src="../scripts/notification-demo.js"></script>
     <script defer src="./discord.js"></script>
     <title>Discord</title>
     <style>
@@ -170,7 +176,7 @@
         width: 32px;
         height: 32px;
         border-radius: 50%;
-        background-image: url("avatars/avatar9.png");
+        background-image: url("./avatars/avatar9.png");
         background-size: cover;
         margin-right: 8px;
         position: relative;
@@ -289,14 +295,14 @@
         <div
           class="server-icon"
           style="
-            background-image: url('servericons/IMG_2670.webp');
+            background-image: url('../servericons/IMG_2670.webp');
             background-size: cover;
           "
         ></div>
         <div
           class="server-icon"
           style="
-            background-image: url('https://via.placeholder.com/48/555');
+            background-color: #555;
             background-size: cover;
           "
         ></div>
