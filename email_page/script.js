@@ -55,7 +55,7 @@ async function loadEmails() {
     notificationSound.currentTime = 0;
     notificationSound.play();
 
-    const randomDelay = 120000 + Math.random() * 180000;
+    const randomDelay = 30000 + Math.random() * 60000;
     setTimeout(showNextEmail, randomDelay);
   }
 
