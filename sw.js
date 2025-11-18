@@ -1,4 +1,4 @@
-const CACHE_NAME = "fun-module-pwa-v1";
+const CACHE_NAME = "fun-module-pwa-v2";
 const urlsToCache = [
 	"./",
 	"./index.html",
@@ -9,6 +9,10 @@ const urlsToCache = [
 	"./manifest.json",
 	"./icons/icon-192.png",
 	"./icons/icon-512.png",
+	"./email_page/email.html",
+	"./email_page/script.js",
+	"./email_page/style.css",
+	"./email_page/email_messages.json",
 ];
 
 // Install event - cache resources
@@ -32,8 +36,21 @@ self.addEventListener("install", event => {
 self.addEventListener("fetch", event => {
 	event.respondWith(
 		caches.match(event.request).then(response => {
-			// Return cached version or fetch from network
-			return response || fetch(event.request);
+			// Return cached version if available
+			if (response) {
+				return response;
+			}
+			// Fetch from network and cache for future use
+			return fetch(event.request).then(response => {
+				// Only cache GET requests with valid responses
+				if (event.request.method === "GET" && response.status === 200) {
+					const responseToCache = response.clone();
+					caches.open(CACHE_NAME).then(cache => {
+						cache.put(event.request, responseToCache);
+					});
+				}
+				return response;
+			});
 		})
 	);
 });

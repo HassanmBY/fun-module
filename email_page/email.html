@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Email Viewer</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
-  </head>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Email Viewer</title>
+		<link rel="stylesheet" href="style.css" />
+		<script src="script.js" defer></script>
+	</head>
 
-  <body>
-    <header class="app-header">
-      <h1 class="app-title">📬 MyMail</h1>
+	<body>
+		<header class="app-header">
+			<h1 class="app-title">📬 MyMail</h1>
 
-      <div class="app-actions">
-        <button class="header-btn">Refresh</button>
-        <button class="header-btn primary">New Email</button>
-      </div>
-    </header>
-    <div class="content-container">
-      <div class="sidebar" id="emailList"></div>
-      <p id="base-paraph">Select an email to view it.</p>
-      <div class="content hidden" id="emailContent"></div>
-    </div>
-  </body>
+			<div class="app-actions">
+				<button class="header-btn">Refresh</button>
+				<button class="header-btn primary">New Email</button>
+			</div>
+		</header>
+		<div class="content-container">
+			<div class="sidebar" id="emailList"></div>
+			<p id="base-paraph">Select an email to view it.</p>
+			<div class="content hidden" id="emailContent"></div>
+		</div>
+		<script src="../register-sw.js"></script>
+	</body>
 </html>
