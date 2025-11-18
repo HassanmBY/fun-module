@@ -1,20 +1,19 @@
-const CACHE_NAME = "fun-module-pwa-v2";
+const CACHE_NAME = "fun-module-pwa-v4";
 const urlsToCache = [
 	"./",
 	"./index.html",
 	"./email.html",
-	"./style/styles.css",
-	"./scripts/app.js",
-	"./scripts/notification-manager.js",
-	"./scripts/notification-demo.js",
 	"./register-sw.js",
 	"./manifest.json",
 	"./icons/icon-192.png",
 	"./icons/icon-512.png",
+	"./scripts/notification-manager.js",
+	"./scripts/notification-demo.js",
 	"./email_page/email.html",
 	"./email_page/script.js",
 	"./email_page/style.css",
 	"./email_page/email_messages.json",
+	"./email_page/assets/notification_sound.mp3",
 	"./discord/discord.html",
 	"./discord/discord.js",
 	"./assets/sounds/notification.mp3",
@@ -38,6 +37,11 @@ self.addEventListener("install", event => {
 });
 
 self.addEventListener("fetch", event => {
+	// Skip non-GET requests
+	if (event.request.method !== "GET") {
+		return;
+	}
+
 	event.respondWith(
 		caches.match(event.request).then(response => {
 			// Return cached version if available
@@ -45,16 +49,27 @@ self.addEventListener("fetch", event => {
 				return response;
 			}
 			// Fetch from network and cache for future use
-			return fetch(event.request).then(response => {
-				// Only cache GET requests with valid responses
-				if (event.request.method === "GET" && response.status === 200) {
-					const responseToCache = response.clone();
-					caches.open(CACHE_NAME).then(cache => {
-						cache.put(event.request, responseToCache);
-					});
-				}
-				return response;
-			});
+			return fetch(event.request)
+				.then(response => {
+					// Only cache GET requests with valid responses
+					// Don't cache opaque responses (CORS without proper headers)
+					if (
+						event.request.method === "GET" &&
+						response.status === 200 &&
+						response.type !== "opaque"
+					) {
+						const responseToCache = response.clone();
+						caches.open(CACHE_NAME).then(cache => {
+							cache.put(event.request, responseToCache);
+						});
+					}
+					return response;
+				})
+				.catch(error => {
+					console.warn("Fetch failed for:", event.request.url, error);
+					// Return a fallback response if available
+					return caches.match(event.request);
+				});
 		})
 	);
 });

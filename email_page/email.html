@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Email Viewer</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Sofadi+One&display=swap"
-      rel="stylesheet"
-    />
-    <script src="script.js" defer></script>
-  </head>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#5865F2" />
+		<title>Email Viewer</title>
+		<link rel="manifest" href="../manifest.json" />
+		<link rel="icon" type="image/png" href="../icons/icon-192.png" />
+		<link rel="stylesheet" href="style.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Sofadi+One&display=swap"
+			rel="stylesheet"
+		/>
+		<script src="script.js" defer></script>
+	</head>
 
-  <body>
-    <header class="app-header">
-      <h1 class="app-title">📬 MyMail</h1>
-    </header>
-    <div class="content-container">
-      <div class="sidebar" id="emailList"></div>
-      <p id="base-paraph">Select an email to view it.</p>
-      <div class="content hidden" id="emailContent"></div>
-    </div>
-    <script src="../register-sw.js"></script>
-
+	<body>
+		<header class="app-header">
+			<h1 class="app-title">📬 MyMail</h1>
+		</header>
+		<div class="content-container">
+			<div class="sidebar" id="emailList"></div>
+			<p id="base-paraph">Select an email to view it.</p>
+			<div class="content hidden" id="emailContent"></div>
+		</div>
+		<script src="../register-sw.js"></script>
 	</body>
 </html>
