@@ -72,6 +72,22 @@ self.addEventListener("activate", event => {
 	return self.clients.claim();
 });
 
+// Play custom audio in service worker
+function playNotificationSound(audioUrl, volume = 0.2) {
+	if (audioUrl) {
+		// In service worker, we need to use clients to play audio
+		clients.matchAll().then(clientList => {
+			for (let client of clientList) {
+				client.postMessage({
+					type: "play-sound",
+					audioUrl: audioUrl,
+					volume: volume,
+				});
+			}
+		});
+	}
+}
+
 // Push notification event handler
 self.addEventListener("push", event => {
 	let data = {};
@@ -83,6 +99,12 @@ self.addEventListener("push", event => {
 		}
 	}
 
+	// Play custom audio if provided
+	if (data.sound) {
+		const volume = data.soundVolume !== undefined ? data.soundVolume : 0.2;
+		playNotificationSound(data.sound, volume);
+	}
+
 	const title = data.title || "New Notification";
 	const options = {
 		body: data.body || "You have a new notification",
@@ -91,7 +113,7 @@ self.addEventListener("push", event => {
 		tag: data.tag || `push-${Date.now()}`,
 		data: data.data || {},
 		requireInteraction: data.requireInteraction || false,
-		silent: data.silent || false,
+		silent: data.sound ? true : data.silent || false, // Silent if custom sound is playing
 		vibrate: data.vibrate,
 		actions: data.actions || [],
 	};

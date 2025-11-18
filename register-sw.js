@@ -28,7 +28,7 @@ window.showNotification = async (title, options) => {
 	}
 };
 
-// Listen for messages from service worker (e.g., Discord reply action)
+// Listen for messages from service worker (e.g., Discord reply action, play sound)
 if ("serviceWorker" in navigator) {
 	navigator.serviceWorker.addEventListener("message", event => {
 		if (event.data && event.data.type === "discord-reply") {
@@ -39,6 +39,20 @@ if ("serviceWorker" in navigator) {
 				// Optionally pre-fill with @mention
 				if (event.data.sender) {
 					messageInput.value = `@${event.data.sender} `;
+				}
+			}
+		} else if (event.data && event.data.type === "play-sound") {
+			// Play custom audio from service worker
+			if (event.data.audioUrl) {
+				try {
+					const audio = new Audio(event.data.audioUrl);
+					const volume = event.data.volume !== undefined ? event.data.volume : 0.2;
+					audio.volume = Math.max(0, Math.min(1, volume)); // Clamp between 0.0 and 1.0
+					audio.play().catch(error => {
+						console.warn("Could not play notification sound:", error);
+					});
+				} catch (error) {
+					console.warn("Error playing notification sound:", error);
 				}
 			}
 		}

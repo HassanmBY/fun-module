@@ -26,6 +26,21 @@ class NotificationManager {
 		return this.permission === "granted";
 	}
 
+	// Play custom audio for notification
+	playNotificationSound(audioUrl, volume = 0.2) {
+		if (audioUrl) {
+			try {
+				const audio = new Audio(audioUrl);
+				audio.volume = Math.max(0, Math.min(1, volume)); // Clamp between 0.0 and 1.0
+				audio.play().catch(error => {
+					console.warn("Could not play notification sound:", error);
+				});
+			} catch (error) {
+				console.warn("Error creating audio for notification:", error);
+			}
+		}
+	}
+
 	// Show local notification (from main app or service worker)
 	async showNotification(title, options = {}) {
 		if (!this.isSupported) {
@@ -42,12 +57,22 @@ class NotificationManager {
 			}
 		}
 
+		// Play custom audio if provided
+		if (options.sound) {
+			const volume = options.soundVolume !== undefined ? options.soundVolume : 0.2;
+			this.playNotificationSound(options.sound, volume);
+		}
+
 		const defaultOptions = {
 			icon: "./icons/icon-192.png",
 			badge: "./icons/icon-192.png",
 			tag: options.tag || `notification-${Date.now()}`,
+			silent: options.sound ? true : options.silent || false, // Silent if custom sound is playing
 			...options,
 		};
+
+		// Remove sound from options (not a valid notification option)
+		delete defaultOptions.sound;
 
 		// Use service worker if available (works in background)
 		if ("serviceWorker" in navigator) {

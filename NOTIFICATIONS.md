@@ -89,6 +89,10 @@ await window.showNotification("Notification Title", {
 	// Mobile Options
 	vibrate: [200, 100, 200], // Vibration pattern (mobile)
 	image: "./images/large-image.png", // Large image (if supported)
+
+	// Custom Audio
+	sound: "./sounds/notification.mp3", // Path to custom audio file (MP3, WAV, OGG)
+	soundVolume: 0.2, // Volume level (0.0 to 1.0), default is 0.2 (20%)
 });
 ```
 
@@ -217,6 +221,57 @@ showDiscordNotification(
 );
 showDiscordMentionNotification("Bob", "Can you check this out?", "general");
 ```
+
+### Example 6: Notification with Custom Audio
+
+```javascript
+// Show notification with custom audio
+async function showNotificationWithSound(title, body, soundUrl) {
+	await window.showNotification(title, {
+		body: body,
+		icon: "./icons/icon-192.png",
+		sound: soundUrl, // Path to your audio file
+		tag: `sound-notification-${Date.now()}`,
+	});
+}
+
+// Usage - with default volume (50%)
+showNotificationWithSound(
+	"New Message",
+	"You have a new message!",
+	"./sounds/notification.mp3"
+);
+
+// Usage - with custom volume (30% - quieter)
+showNotificationWithSound(
+	"New Message",
+	"You have a new message!",
+	"./sounds/notification.mp3",
+	0.3 // 30% volume
+);
+
+// Or use soundVolume in options directly
+await window.showNotification("New Message", {
+	body: "You have a new message!",
+	sound: "./sounds/notification.mp3",
+	soundVolume: 0.3, // 30% volume - quieter
+});
+```
+
+**Audio Notes:**
+
+- Audio files should be placed in a `sounds/` directory (or any directory you prefer)
+- Supported formats: MP3, WAV, OGG
+- The notification will be silent (no system sound) when custom audio is playing
+- Audio plays automatically when the notification is shown
+- Works both in foreground and background (via service worker)
+- **Volume control**: Use `soundVolume` option (0.0 to 1.0)
+  - `0.0` = silent
+  - `0.2` = 20% volume (default, quiet)
+  - `0.3` = 30% volume (moderate)
+  - `0.5` = 50% volume (loud)
+  - `0.7` = 70% volume (very loud)
+  - `1.0` = 100% volume (maximum)
 
 ## Requesting Permission
 

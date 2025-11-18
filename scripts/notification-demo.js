@@ -78,7 +78,13 @@ async function showReminderNotification() {
 }
 
 // Discord-like notification with actions
-async function showDiscordNotification(sender, message, channel, avatar) {
+async function showDiscordNotification(
+	sender,
+	message,
+	channel,
+	avatar,
+	sound
+) {
 	try {
 		await window.showNotification(`${sender} - ${channel}`, {
 			body: message,
@@ -86,6 +92,7 @@ async function showDiscordNotification(sender, message, channel, avatar) {
 			badge: "./icons/icon-192.png",
 			tag: `discord-${channel}-${sender}`,
 			requireInteraction: false,
+			sound: sound || "./assets/sounds/notification.mp3", // Custom audio file
 			data: {
 				url: "./index.html",
 				sender: sender,
@@ -109,7 +116,7 @@ async function showDiscordNotification(sender, message, channel, avatar) {
 }
 
 // Discord notification for mentions
-async function showDiscordMentionNotification(sender, message, channel) {
+async function showDiscordMentionNotification(sender, message, channel, sound) {
 	try {
 		await window.showNotification(`@${sender} mentioned you in #${channel}`, {
 			body: message,
@@ -117,6 +124,7 @@ async function showDiscordMentionNotification(sender, message, channel) {
 			badge: "./icons/icon-192.png",
 			tag: `discord-mention-${channel}`,
 			requireInteraction: true,
+			sound: sound || "./assets/sounds/mention.mp3", // Custom audio for mentions
 			data: {
 				url: "./index.html",
 				sender: sender,
@@ -139,6 +147,26 @@ async function showDiscordMentionNotification(sender, message, channel) {
 	}
 }
 
+// Example: Notification with custom audio
+async function showNotificationWithSound(
+	title,
+	body,
+	soundUrl = "./assets/sounds/notification.mp3",
+	volume = 0.2
+) {
+	try {
+		await window.showNotification(title, {
+			body: body,
+			icon: "./icons/icon-192.png",
+			sound: soundUrl, // Path to your custom audio file
+			soundVolume: volume, // Volume level (0.0 to 1.0), default is 0.2 (20%)
+			tag: `sound-notification-${Date.now()}`,
+		});
+	} catch (error) {
+		console.error("Error showing notification with sound:", error);
+	}
+}
+
 // Make functions available globally
 window.testNotification = testNotification;
 window.showNotificationWithActions = showNotificationWithActions;
@@ -146,3 +174,4 @@ window.showNewMessageNotification = showNewMessageNotification;
 window.showReminderNotification = showReminderNotification;
 window.showDiscordNotification = showDiscordNotification;
 window.showDiscordMentionNotification = showDiscordMentionNotification;
+window.showNotificationWithSound = showNotificationWithSound;
