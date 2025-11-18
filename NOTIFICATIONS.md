@@ -209,7 +209,12 @@ async function showDiscordMentionNotification(sender, message, channel) {
 }
 
 // Usage
-showDiscordNotification("Alice", "Hey everyone! How are you?", "general", "./icons/icon-192.png");
+showDiscordNotification(
+	"Alice",
+	"Hey everyone! How are you?",
+	"general",
+	"./icons/icon-192.png"
+);
 showDiscordMentionNotification("Bob", "Can you check this out?", "general");
 ```
 
