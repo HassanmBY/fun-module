@@ -5,6 +5,8 @@ const urlsToCache = [
 	"./email.html",
 	"./style/styles.css",
 	"./scripts/app.js",
+	"./scripts/notification-manager.js",
+	"./scripts/notification-demo.js",
 	"./register-sw.js",
 	"./manifest.json",
 	"./icons/icon-192.png",
@@ -19,7 +21,6 @@ const urlsToCache = [
 self.addEventListener("install", event => {
 	event.waitUntil(
 		caches.open(CACHE_NAME).then(cache => {
-			console.log("Service Worker: Caching files");
 			return Promise.allSettled(
 				urlsToCache.map(url =>
 					cache.add(url).catch(err => {
@@ -61,7 +62,6 @@ self.addEventListener("activate", event => {
 			return Promise.all(
 				cacheNames.map(cacheName => {
 					if (cacheName !== CACHE_NAME) {
-						console.log("Service Worker: Deleting old cache", cacheName);
 						return caches.delete(cacheName);
 					}
 				})
@@ -70,4 +70,109 @@ self.addEventListener("activate", event => {
 	);
 
 	return self.clients.claim();
+});
+
+// Push notification event handler
+self.addEventListener("push", event => {
+	let data = {};
+	if (event.data) {
+		try {
+			data = event.data.json();
+		} catch (e) {
+			data = { title: event.data.text() || "New Notification" };
+		}
+	}
+
+	const title = data.title || "New Notification";
+	const options = {
+		body: data.body || "You have a new notification",
+		icon: data.icon || "./icons/icon-192.png",
+		badge: "./icons/icon-192.png",
+		tag: data.tag || `push-${Date.now()}`,
+		data: data.data || {},
+		requireInteraction: data.requireInteraction || false,
+		silent: data.silent || false,
+		vibrate: data.vibrate,
+		actions: data.actions || [],
+	};
+
+	event.waitUntil(self.registration.showNotification(title, options));
+});
+
+// Notification click event handler
+self.addEventListener("notificationclick", event => {
+	event.notification.close();
+
+	const notificationData = event.notification.data || {};
+	const action = event.action;
+
+	// Handle action buttons
+	if (action === "view" && notificationData.url) {
+		event.waitUntil(clients.openWindow(notificationData.url || "./"));
+		return;
+	}
+
+	if (action === "dismiss") {
+		// Just close the notification
+		return;
+	}
+
+	// Discord-specific actions
+	if (action === "reply") {
+		// Open app and focus on reply input
+		event.waitUntil(
+			clients
+				.matchAll({ type: "window", includeUncontrolled: true })
+				.then(clientList => {
+					for (let client of clientList) {
+						if (client.url.includes(self.location.origin) && "focus" in client) {
+							client.focus();
+							// Post message to client to focus reply input
+							client.postMessage({
+								type: "discord-reply",
+								channel: notificationData.channel,
+								sender: notificationData.sender,
+							});
+							return;
+						}
+					}
+					const urlToOpen = notificationData.url || "./";
+					if (clients.openWindow) {
+						return clients.openWindow(urlToOpen);
+					}
+				})
+		);
+		return;
+	}
+
+	if (action === "mark-read") {
+		// Mark message as read (just close notification)
+		// In a real app, you'd send a message to mark it as read
+		return;
+	}
+
+	// Default click behavior - focus or open the app
+	event.waitUntil(
+		clients
+			.matchAll({ type: "window", includeUncontrolled: true })
+			.then(clientList => {
+				// Check if app is already open
+				for (let client of clientList) {
+					if (client.url.includes(self.location.origin) && "focus" in client) {
+						return client.focus();
+					}
+				}
+
+				// Open new window/tab
+				const urlToOpen = notificationData.url || "./";
+				if (clients.openWindow) {
+					return clients.openWindow(urlToOpen);
+				}
+			})
+	);
+});
+
+// Notification close event handler
+self.addEventListener("notificationclose", event => {
+	// Optional: Track notification dismissals
 });
