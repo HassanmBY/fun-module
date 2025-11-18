@@ -8,9 +8,8 @@ async function loadEmails() {
 
   let index = 0;
 
-  // Load your sound file (put it in your project folder)
   const notificationSound = new Audio("./assets/notification_sound.mp3");
-
+  notificationSound.volume = 0.2;
   function showNextEmail() {
     if (index >= emails.length) return; // Stop when all emails are loaded
 
@@ -53,11 +52,9 @@ async function loadEmails() {
 
     list.appendChild(item);
 
-    // Play notification sound
-    notificationSound.currentTime = 0; // restart sound
+    notificationSound.currentTime = 0;
     notificationSound.play();
 
-    // Schedule the next email in 2–5 minutes (120000–300000 ms)
     const randomDelay = 120000 + Math.random() * 180000;
     setTimeout(showNextEmail, randomDelay);
   }
